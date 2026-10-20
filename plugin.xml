@@ -71,7 +71,7 @@
     </platform>
     <platform name="android">
 
-        <!-- CORRIGÉ : "default" au lieu de "value", sinon Cordova exige --variable à l'installation -->
+        <!-- CORRIGÉ : "default" au lieu de "value", sinon Cordova exige le paramètre variable à l installation -->
         <preference name="LOCATION_ACCESS_TITLE" default="Accès à la localisation" />
         <preference name="LOCATION_ACCESS_DESCRIPTION" default="La localisation permet de détecter votre bracelet d'alerte." />
 
@@ -81,6 +81,7 @@
             </feature>
         </config-file>
 
+        <!-- CORRIGÉ : permission READ_EXTERNAL_STORAGE retirée (inutile pour les beacons) -->
 
         <source-file src="src/android/LocationManager.java" target-dir="src/com/unarin/cordova/beacon" />
         <source-file src="src/android/IBeaconServiceNotifier.java" target-dir="src/com/unarin/cordova/beacon" />
@@ -88,6 +89,7 @@
         <source-file src="src/android/PausableThreadPoolExecutor.java" target-dir="src/com/unarin/cordova/beacon" />
 
         <framework src="src/android/cordova-plugin-ibeacon.gradle" custom="true" type="gradleReference" />
+        <!-- CORRIGÉ : ancienne librairie de support remplacée par son équivalent AndroidX -->
         <framework src="androidx.legacy:legacy-support-core-utils:1.0.0" />
 
         <source-file src="src/android/location_access_string.xml" target-dir="res/values" />
