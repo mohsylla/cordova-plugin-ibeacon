@@ -35,13 +35,9 @@
   },
   "homepage": "https://github.com/petermetz/cordova-plugin-ibeacon",
   "devDependencies": {
-    "@commitlint/cli": "19.8.1",
-    "@commitlint/config-conventional": "19.8.1",
     "eslint": "9.36.0",
-    "husky": "9.1.7"
   },
   "scripts": {
-    "lint": "eslint .",
-    "postinstall": "husky"
+    "lint": "eslint ."
   }
 }
