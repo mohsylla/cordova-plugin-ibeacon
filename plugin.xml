@@ -73,7 +73,7 @@
 
         <!-- CORRIGÉ : "default" au lieu de "value", sinon Cordova exige le paramètre variable à l installation -->
         <preference name="LOCATION_ACCESS_TITLE" default="Accès à la localisation" />
-        <preference name="LOCATION_ACCESS_DESCRIPTION" default="La localisation permet de détecter votre bracelet d'alerte." />
+        <preference name="LOCATION_ACCESS_DESCRIPTION" default="Autorisez la localisation pour détecter le bracelet." />
 
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="LocationManager" >
