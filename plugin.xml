@@ -7,9 +7,6 @@
     <keywords>cordova,ibeacon,beacon,bluetooth,le</keywords>
     <repo>https://github.com/petermetz/cordova-plugin-ibeacon.git</repo>
 
-    <!-- Version is set to anything because the only feature we use is the device.platform property which was available
-    since forever. The added benefit is that we don't force the consumers of this plugin to use a certain version of
-    the device plugin. -->
     <dependency id="cordova-plugin-device" version="*" />
 
     <!-- Third party libraries -->
@@ -23,8 +20,6 @@
 
     <!-- Plugin source code: Core -->
     <js-module name="LocationManager" src="www/LocationManager.js">
-        <!-- see http://cordova.apache.org/docs/en/3.0.0/plugin_ref_spec.md#Plugin%20Specification_js_module_element -->
-        <!-- We have to use clobers but with cordova.plugins.locationManager or if you'd like to merge you need to user merges to make alle objects acessable -->
         <merges target="cordova.plugins"/>
     </js-module>
 
@@ -58,21 +53,8 @@
             </feature>
         </config-file>
 
-        <config-file target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
-            <string>This app would like to scan for iBeacons even when in the background.</string>
-        </config-file>
-        <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
-            <string>This app would like to scan for iBeacons while it is in use.</string>
-        </config-file>
-        <config-file target="*-Info.plist" parent="NSBluetoothAlwaysUsageDescription">
-            <string>This app would like to scan for iBeacons.</string>
-        </config-file>
-        <config-file target="*-Info.plist" parent="NSBluetoothPeripheralUsageDescription">
-            <string>This app would like to scan for iBeacons.</string>
-        </config-file>
-        <config-file target="*-Info.plist" parent="NSLocationAlwaysAndWhenInUseUsageDescription">
-            <string>This app would like to scan for iBeacons both while in use and while in the background.</string>
-        </config-file>
+        <!-- CORRIGÉ : textes d'autorisation (NSLocation*, NSBluetooth*) retirés.
+             Ils sont définis par l'application dans son config.xml, en français. -->
 
         <header-file src="src/ios/CDVLocationManager.h"/>
         <source-file src="src/ios/CDVLocationManager.m"/>
@@ -88,19 +70,17 @@
 
     </platform>
     <platform name="android">
-	
-	<preference name="LOCATION_ACCESS_TITLE" value="This app needs location access" />
-	<preference name="LOCATION_ACCESS_DESCRIPTION" value="Please grant location access so this app can detect beacons." />	
-	
+
+        <!-- CORRIGÉ : "default" au lieu de "value", sinon Cordova exige --variable à l'installation -->
+        <preference name="LOCATION_ACCESS_TITLE" default="Accès à la localisation" />
+        <preference name="LOCATION_ACCESS_DESCRIPTION" default="La localisation permet de détecter votre bracelet d'alerte." />
+
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="LocationManager" >
                 <param name="android-package" value="com.unarin.cordova.beacon.LocationManager"/>
             </feature>
         </config-file>
 
-        <config-file target="AndroidManifest.xml" parent="/manifest">
-			<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-        </config-file>
 
         <source-file src="src/android/LocationManager.java" target-dir="src/com/unarin/cordova/beacon" />
         <source-file src="src/android/IBeaconServiceNotifier.java" target-dir="src/com/unarin/cordova/beacon" />
@@ -108,20 +88,20 @@
         <source-file src="src/android/PausableThreadPoolExecutor.java" target-dir="src/com/unarin/cordova/beacon" />
 
         <framework src="src/android/cordova-plugin-ibeacon.gradle" custom="true" type="gradleReference" />
-        <framework src="com.android.support:support-core-utils:26+" />
-		
+        <framework src="androidx.legacy:legacy-support-core-utils:1.0.0" />
+
         <source-file src="src/android/location_access_string.xml" target-dir="res/values" />
         <!-- Used for cordova-android 6 -->
-		 <config-file target="res/values/location_access_string.xml" parent="/*">
+        <config-file target="res/values/location_access_string.xml" parent="/*">
             <string name="location_access_title">$LOCATION_ACCESS_TITLE</string>
-			<string name="location_access_description">$LOCATION_ACCESS_DESCRIPTION</string>
+            <string name="location_access_description">$LOCATION_ACCESS_DESCRIPTION</string>
         </config-file>
-        <!-- Used for cordova-android 7 -->
-		<config-file target="app/src/main/res/values/location_access_string.xml" parent="/*">
+        <!-- Used for cordova-android 7+ -->
+        <config-file target="app/src/main/res/values/location_access_string.xml" parent="/*">
             <string name="location_access_title">$LOCATION_ACCESS_TITLE</string>
-			<string name="location_access_description">$LOCATION_ACCESS_DESCRIPTION</string>
+            <string name="location_access_description">$LOCATION_ACCESS_DESCRIPTION</string>
         </config-file>
-		
+
     </platform>
 
 </plugin>
